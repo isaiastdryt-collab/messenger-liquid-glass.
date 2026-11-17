@@ -1,21 +1,20 @@
+
 group = "app.template"
 
 patches {
-    // TODO: Update this section with your project details.
     about {
-        name = "UserXYZ Patches"
-        description = "Patches for apps I like"
-        source = "git@github.com:UserXYZ/morphe-patches.git"
-        author = "Awesome dev"
+        name = "Messenger Liquid Glass"
+        description = "Liquid Glass interface customization for Messenger Android"
+        source = "https://github.com/isaiastdryt-collab/messenger-liquid-glass.git"
+        author = "isaiastdryt-collab"
         contact = "na"
-        website = "na"
+        website = "https://github.com/isaiastdryt-collab/messenger-liquid-glass"
         license = "GPLv3"
     }
 }
 
-// Separate configuration so gson is available at runtime for the
-// generatePatchesList task but never bundled into the APK.
-val patchListGeneratorClasspath = configurations.create("patchListGeneratorClasspath")
+val patchListGeneratorClasspath =
+    configurations.create("patchListGeneratorClasspath")
 
 dependencies {
     compileOnly(libs.gson)
@@ -28,11 +27,12 @@ tasks {
 
         dependsOn(build)
 
-        classpath = sourceSets["main"].runtimeClasspath + patchListGeneratorClasspath
+        classpath = sourceSets["main"].runtimeClasspath +
+            patchListGeneratorClasspath
+
         mainClass.set("util.PatchListGeneratorKt")
     }
 
-    // Used by gradle-semantic-release-plugin.
     publish {
         dependsOn("generatePatchesList")
     }
